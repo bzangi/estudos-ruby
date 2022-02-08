@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/flicks/movie3_d'
+require_relative '../lib/flicks/playlist.rb'
+
+playlist1 = Flicks::Playlist.new('Marathon')
+default_movie_file = File.join(File.dirname(__FILE__), 'movies.csv')
+playlist1.load(ARGV.shift || default_movie_file)
+movie3d = Flicks::Movie3D.new('X-Men', 7, 20)
+playlist1.add_movie(movie3d)
+
+loop do
+  puts "\nHow many viewings? (type 'quit' to exit)"
+  answer = gets.chomp.downcase
+  case answer
+  when /^\d+$/ # caso seja um número
+    if answer.to_i.positive?
+      playlist1.play(answer.to_i)
+    else
+      puts "Enter a valid number or 'quit'"
+    end
+  when 'quit', 'exit'
+    playlist1.print_stats
+    break
+  else
+    puts "Enter a valid number or 'quit'"
+  end
+end
+
+playlist1.save
