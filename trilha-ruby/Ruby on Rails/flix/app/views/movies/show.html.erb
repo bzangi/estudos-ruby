@@ -7,6 +7,10 @@
     <h2>
       <%= formatted_date(@movie) %> &bull; <%= @movie.rating %>
     </h2>
+    <div class="reviews">
+      <%= link_to pluralize(@movie.reviews.size, "review"),
+                  movie_reviews_path(@movie) %>
+    </div>
     <p><%= @movie.description %></p>
     <table>
       <tr>
@@ -22,6 +26,7 @@
         <td><%= number_to_currency(@movie.total_gross, precision: 0) %></td>
       </tr>
     </table>
+    <%= link_to "Write Review", new_movie_review_path(@movie), class: "review" %>
   </div>
 </section>
 
