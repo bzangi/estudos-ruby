@@ -3,7 +3,7 @@
   <% @reviews.each do |r| %>
     <li>
       <p>
-        <%= r.name %>
+        <%= link_to r.user.name, r.user %>
         <%= render "shared/stars", percent: r.stars_as_percent %>
         <span class="date">
           <%= time_ago_in_words(r.created_at) %> ago
@@ -12,13 +12,13 @@
       <p>
         <%= r.comment %>
       </p>
-      <div class="reviews">
-        <%= link_to "Edit", edit_movie_review_path(id: r.id, movie_id: @movie.id), class: "button" %>
-      </div>
-      <div class="reviews">
-        <%= link_to "delete review", movie_review_path(id: r.id, movie_id: @movie.id),
-                    class: "button", method: :delete, data: { confirm: "Are you sure you want to delete #{r.name}'s review?"} %>
-      </div>
+      <% if current_user?(r.user) || current_user_admin? %>
+        <div class="reviews">
+          <%= link_to "Edit", edit_movie_review_path(id: r.id, movie_id: @movie.id), class: "button" %>
+          <%= link_to "delete review", movie_review_path(id: r.id, movie_id: @movie.id),
+                      class: "button", method: :delete, data: { confirm: "Are you sure you want to delete #{r.user.name}'s review?" } %>
+        </div>
+      <% end %>
     </li>
   <% end %>
 </ul>

@@ -1,18 +1,32 @@
 class MoviesController < ApplicationController
+
+  before_action :set_movie, only: [:show, :edit, :update, :destroy]
+  before_action :require_signin, except: [:index, :show, :upcoming]
+  before_action :require_admin, except: [:index, :show, :upcoming]
+
   def index #action
-    @movies = Movie.released
+    case params[:filter]
+      when 'flops'
+        @movies = Movie.released.select{ |movie| movie.flop? }
+      else
+        @movies = Movie.send(movies_filter)
+    end
   end
 
   def show
-    @movie = Movie.find(params[:id])
+
+    @fans = @movie.fans
+    @genres = @movie.genres.order(:name)
+    if current_user
+      @favorite = current_user.favorites.find_by(movie_id: @movie.id)
+    end
+
   end
 
   def edit
-    @movie = Movie.find(params[:id])
   end
 
   def update
-    @movie = Movie.find(params[:id])
 
     if @movie.update(movie_params)
       redirect_to @movie, notice: "Event successfully updated!"
@@ -36,18 +50,28 @@ class MoviesController < ApplicationController
   end
 
   def destroy
-    @movie = Movie.find(params[:id])
     @movie.destroy
 
     redirect_to movies_url, alert: "Event successfully deleted!"
   end
 
-  def upcoming
-    @movies = Movie.upcoming
-  end
   private
 
-    def movie_params
-      params.require(:movie).permit(:title, :description, :rating, :released_on, :total_gross, :duration, :director, :image_file_name)
+  def movie_params
+    params.require(:movie).permit(:title, :description, :rating,
+                                  :released_on, :total_gross, :duration,
+                                  :director, :image_file_name, genre_ids: [])
+  end
+
+  def movies_filter
+    if params[:filter].in? %w(released upcoming recent hits)
+      params[:filter]
+    else
+      :all
     end
+  end
+
+  def set_movie
+    @movie = Movie.find_by!(slug: params[:id])
+  end
 end
