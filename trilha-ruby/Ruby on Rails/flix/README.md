@@ -10,3 +10,13 @@ gem install bundler
 ```
 bundle install
 ```
+```
+rails server
+```
+```
+rails db:migrate
+```
+```
+bundle exec rake webpacker:install
+```
+
