@@ -17,6 +17,8 @@ rails server
 rails db:migrate
 ```
 ```
+rake db:seed
+```
+```
 bundle exec rake webpacker:install
 ```
-
