@@ -22,3 +22,6 @@ rake db:seed
 ```
 bundle exec rake webpacker:install
 ```
+- Acesse `localhost:3000`
+
+Caso apresente algum erro, finalize a aplicação com `Ctrl + C` no terminal que ela estiver rodando e inicie novamente com `rails server`
