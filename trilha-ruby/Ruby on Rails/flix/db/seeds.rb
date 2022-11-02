@@ -172,9 +172,86 @@ Movie.create!([
                   director: "Patty Jenkins",
                   duration: "141 min",
                   image_file_name: "wonder-woman.png"
+                },
+                {
+                  title: 'Pantera Negra: Wakanda Para Sempre',
+                  description:
+                    %{
+                      Após a morte do rei T'Challa, Shuri, Okoye, Nakia e Ramonda enfrentam os acontecimentos seguintes do trono de Wakanda. Além de ter que manter a diplomacia com outros países, Wakanda terá que manter boas relações com Atlantis, um reino subaquático, e seu rei Namor. 
+                      }.squish,
+                  released_on: '2022-11-10',
+                  rating: 'PG-13',
+                  total_gross: 0,
+                  director: 'Ryan Coogler',
+                  duration: '161 min',
+                  image_file_name: 'black-panther-wakandaforever.jpg'
+                },
+                {
+                  title: 'Avatar: O Caminho da Água',
+                  description:
+                    %{                      
+                      Sequência do longa de 2009 dirigido por James Cameron, Jake Sully e Ney'tiri devem lutar novamente para salvar o planeta de Pandora de uma ameaça familiar.
+                      }.squish,
+                  released_on: '2022-12-16',
+                  rating: 'PG-13',
+                  total_gross: 0,
+                  director: 'James Cameron',
+                  duration: '190 min',
+                  image_file_name: 'avatar-caminho-da-agua.jpg'
                 }
               ])
 Genre.create!([{ name: "Action" }, { name: "Comedy" }, { name: "Drama" },
                { name: "Romance" }, { name: "Thriller" }, { name: "Fantasy" },
                { name: "Documentary" }, { name: "Adventure" }, { name: "Animation" },
                { name: "Sci-Fi" }])
+User.create!([
+              {
+                username: 'admin',
+                name: 'Admin',
+                email: 'admin@example.com',
+                password: 'admin12345',
+                admin: true
+              }])
+User.create!([
+              {
+                username: 'bzangi',
+                name: 'Bruno',
+                email: 'bruno@example.com',
+                password: 'bruno12345',
+                admin: false
+              }])
+Review.create!([
+                {
+                  stars: 5,
+                  comment: 'Filme incrível',
+                  movie_id: 1,
+                  user_id: 1
+                },
+                {
+                  stars: 3,
+                  comment: 'Filme mediano, não assistiria novamente',
+                  movie_id: 1,
+                  user_id: 2
+                },
+                {
+                  stars: 2,
+                  comment: 'Além de curto, é horroroso, falta fotografia e lógica',
+                  movie_id: 12,
+                  user_id: 1
+                },
+                {
+                  stars: 1,
+                  comment: 'Péssimo, perda de tempo',
+                  movie_id: 12,
+                  user_id: 2
+                },
+                {
+                  stars: 5,
+                  comment: 'Nostálgico',
+                  movie_id: 8,
+                  user_id: 2
+                }])
+Favorite.create!([{
+                  movie_id: 8,
+                  user_id: 1
+                }])
